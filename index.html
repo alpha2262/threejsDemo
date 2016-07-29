@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+
+    <!-- required file  for adding three.js library-->
+		<script src="js/three.js"></script>
+    <script>
+    var scene = new THREE.Scene();
+
+    //width divded by height to prevent skewed image (think old movie filling a widescreen TV)
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    //size of the geometric object
+    var geometry = new THREE.BoxGeometry( 3, 3, 3 );
+
+    //materials are the "skin" of the object you're viewing
+    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+
+    //camera.position is necessary to set the camera away from the object (think stepping back to take a picture).
+    //position and geometry variable seem to counteract each other. The farther back you are, the smaller the object. The bigger the object, the bigger it appears.
+    camera.position.z = 5;
+
+    function render() {
+      //similar to setInterval, except stops rendering when a user goes to another browser, helping reduce processing power
+      requestAnimationFrame( render );
+      //speeds up or slows down the rotation of the object
+      //rotation runs 60 times per second
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      renderer.render( scene, camera );
+    }
+    render();
+
+
+    </script>
+	</body>
+</html>
